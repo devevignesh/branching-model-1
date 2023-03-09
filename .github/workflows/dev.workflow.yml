@@ -1,0 +1,15 @@
+on:
+  push:
+    branches:
+      - develop
+name: Develop
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Run number with offset
+      env:
+        NUM: ${{ github.run_number }}
+      run: |
+       echo "GITHUB_RUN_NUMBER_WITH_OFFSET=$(($NUM+1000))" >> $GITHUB_ENV
+    - run: echo ${{ env.GITHUB_RUN_NUMBER_WITH_OFFSET }}
