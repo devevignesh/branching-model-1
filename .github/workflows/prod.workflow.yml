@@ -1,17 +1,15 @@
-name: Master Workflow - Build and deploy to production
-run-name: Deploy to ${{ inputs.deploy_target }} by @${{ github.actor }}
 on:
-  pull_request:
-    types: closed
+  push:
     branches:
       - master
-      - develop
-      - "release/**"
+name: Master
 jobs:
   build:
-    name: Core Unit Tests
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/setup-node@v1
-    - run: |
-        console.log("hello world")
+    - name: Run number with offset
+      env:
+        NUM: ${{ github.run_number }}
+      run: |
+       echo "GITHUB_RUN_NUMBER_WITH_OFFSET=$(($NUM+1000))" >> $GITHUB_ENV
+    - run: echo ${{ env.GITHUB_RUN_NUMBER_WITH_OFFSET }}
